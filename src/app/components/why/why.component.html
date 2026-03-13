@@ -1,0 +1,48 @@
+<section class="why" id="why">
+  <div class="section-inner">
+    <div class="why-grid">
+
+      <!-- Left: title + points -->
+      <div class="why-left">
+        <div class="sec-hd reveal" style="text-align:left; margin-bottom:2rem; margin-left:0">
+          <div class="eyebrow"><mat-icon>verified</mat-icon>Why Choose Us</div>
+          <h2 class="sec-title">Built different,<br><span class="grad">by design</span></h2>
+          <div class="sec-divider" style="margin:0.75rem 0 0"></div>
+          <p class="sec-sub" style="margin-top:1rem">
+            We're not just developers — we're strategic partners who care deeply about your success.
+            Here's what sets us apart.
+          </p>
+        </div>
+
+        <div class="points">
+          <div class="point reveal" *ngFor="let p of points">
+            <div class="point-icon" [style.background]="p.gradient">
+              <mat-icon>{{ p.icon }}</mat-icon>
+            </div>
+            <div class="point-body">
+              <h4>{{ p.title }}</h4>
+              <p>{{ p.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: metrics -->
+      <div class="why-right">
+        <div class="metric-card reveal" *ngFor="let m of metrics">
+          <div class="mc-icon" [style.background]="m.gradient">
+            <mat-icon>{{ m.icon }}</mat-icon>
+          </div>
+          <div class="mc-body">
+            <div class="mc-value">{{ m.value }}</div>
+            <div class="mc-label">{{ m.label }}</div>
+            <div class="mc-bar">
+              <div class="mc-fill" [style.width.%]="m.fillPercent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

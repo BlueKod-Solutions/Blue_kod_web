@@ -1,0 +1,109 @@
+<section class="contact sec-top-line" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+
+      <!-- ── Info column ── -->
+      <div class="contact-info">
+        <div class="sec-hd reveal" style="text-align:left; margin:0 0 1.5rem 0">
+          <div class="eyebrow"><mat-icon>contact_mail</mat-icon>Get In Touch</div>
+          <h2 class="sec-title">Let's build<br><span class="grad">something great</span></h2>
+          <div class="sec-divider" style="margin:0.75rem 0 0"></div>
+          <p class="sec-sub" style="margin-top:1rem">
+            Have a project in mind? Send us a message and we will get back to you within 24 hours.
+            Every submission is securely stored in our database.
+          </p>
+        </div>
+
+        <div class="info-item reveal" *ngFor="let item of contactItems">
+          <div class="info-icon"><mat-icon>{{ item.icon }}</mat-icon></div>
+          <div>
+            <div class="info-label">{{ item.label }}</div>
+            <div class="info-value">{{ item.value }}</div>
+          </div>
+        </div>
+
+        <div class="social-row reveal">
+          <a href="#" class="soc-btn" aria-label="GitHub">   <mat-icon>code</mat-icon></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"> <mat-icon>work</mat-icon></a>
+          <a href="#" class="soc-btn" aria-label="Twitter">  <mat-icon>public</mat-icon></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><mat-icon>photo_camera</mat-icon></a>
+        </div>
+
+        <!-- DB badge -->
+        <!-- <div class="db-badge reveal">
+          <mat-icon>storage</mat-icon>
+          <span>Submissions are stored securely in <strong>MongoDB</strong></span>
+        </div> -->
+      </div>
+
+      <!-- ── Form column ── -->
+      <div class="contact-form-card reveal">
+
+        <!-- Success state -->
+        <div class="form-success" *ngIf="submitted">
+          <mat-icon class="success-icon">check_circle</mat-icon>
+          <h3>Message Sent!</h3>
+          <p>Thank you for reaching out. Your details have been saved and we will get back to you within 24 hours.</p>
+          <button mat-stroked-button class="btn-back" (click)="resetForm()">
+            <mat-icon>arrow_back</mat-icon> Send Another
+          </button>
+        </div>
+
+        <!-- Form -->
+        <div class="form-body" *ngIf="!submitted">
+          <h3 class="form-title">Send us a message</h3>
+
+          <!-- Server error banner -->
+          <div class="error-banner" *ngIf="serverError">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ serverError }}</span>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-w">
+              <mat-label>First Name *</mat-label>
+              <input matInput [(ngModel)]="form.firstName" name="firstName" placeholder="John" [disabled]="loading">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-w">
+              <mat-label>Last Name</mat-label>
+              <input matInput [(ngModel)]="form.lastName" name="lastName" placeholder="Doe" [disabled]="loading">
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-w">
+            <mat-label>Email Address *</mat-label>
+            <input matInput type="email" [(ngModel)]="form.email" name="email" placeholder="john@example.com" [disabled]="loading">
+            <mat-icon matSuffix>mail</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-w">
+            <mat-label>Service Needed</mat-label>
+            <mat-select [(ngModel)]="form.service" name="service" [disabled]="loading">
+              <mat-option value="">— Select a service —</mat-option>
+              <mat-option *ngFor="let s of services" [value]="s">{{ s }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-w">
+            <mat-label>Message *</mat-label>
+            <textarea matInput rows="4" [(ngModel)]="form.message" name="message"
+                      placeholder="Tell us about your project..." [disabled]="loading"></textarea>
+            <mat-hint align="end">{{ form.message.length }} / 2000</mat-hint>
+          </mat-form-field>
+
+          <button mat-raised-button class="btn-submit" (click)="onSubmit()" [disabled]="loading">
+            <mat-icon *ngIf="!loading">send</mat-icon>
+            <mat-icon *ngIf="loading" class="spin">refresh</mat-icon>
+            {{ loading ? 'Saving to database…' : 'Send Message' }}
+          </button>
+
+          <p class="form-note">
+            <mat-icon>lock</mat-icon>
+            Your data is encrypted and stored securely in MongoDB.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

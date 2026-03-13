@@ -1,0 +1,80 @@
+<section class="hero" id="home">
+
+  <!-- Animated BG -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="grid-lines"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="bdot"></span>
+      Available for new projects
+    </div>
+
+    <h1 class="hero-title">
+      BlueKod –<br>
+      <span class="title-grad">Freelance Tech</span><br>
+      Solutions
+    </h1>
+
+    <p class="hero-sub">Professional Web, AI, and Design Services</p>
+
+    <div class="hero-role">
+      <span class="role-label">We build</span>
+      <span class="role-value" [class.visible]="roleVisible">{{ currentRole }}</span>
+    </div>
+
+    <div class="hero-btns">
+      <button mat-raised-button class="btn-start" (click)="scrollTo('services')">
+        <mat-icon>rocket_launch</mat-icon>
+        Get Started
+      </button>
+      <button mat-stroked-button class="btn-story" (click)="scrollTo('about')">
+        <mat-icon>play_circle</mat-icon>
+        Our Story
+      </button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat" *ngFor="let s of stats">
+        <span class="stat-val">{{ s.value }}</span>
+        <span class="stat-lbl">{{ s.label }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code card (decorative) -->
+  <div class="hero-visual" aria-hidden="true">
+    <div class="code-card">
+      <div class="cc-header">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="cc-title">bluekod.app</span>
+      </div>
+      <div class="cc-body">
+        <span class="line"><span class="k">const</span> <span class="v">project</span> <span class="o">=</span> <span class="s">&#123;</span></span>
+        <span class="line indent"><span class="k">name</span><span class="o">:</span> <span class="s">'BlueKod'</span><span class="o">,</span></span>
+        <span class="line indent"><span class="k">stack</span><span class="o">:</span> <span class="s">['Angular', 'AI', 'Node']</span><span class="o">,</span></span>
+        <span class="line indent"><span class="k">status</span><span class="o">:</span> <span class="g">'✓ deployed'</span></span>
+        <span class="line"><span class="s">&#125;</span></span>
+        <span class="line mt"><span class="c">// Ready to build yours?</span></span>
+      </div>
+      <div class="cc-footer">
+        <mat-icon class="check-icon">check_circle</mat-icon>
+        <span>Live &amp; Deployed</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue" (click)="scrollTo('services')" role="button" tabindex="0" aria-label="Scroll to services">
+    <div class="cue-line"></div>
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </div>
+
+</section>

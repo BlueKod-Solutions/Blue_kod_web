@@ -1,0 +1,65 @@
+<section class="about sec-top-line" id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+
+      <!-- Visual -->
+      <div class="about-visual reveal">
+        <div class="about-card">
+          <div class="eyebrow" style="margin-bottom:1rem">
+            <mat-icon>diversity_3</mat-icon>Meet the Team
+          </div>
+          <p class="team-intro">A small, focused team of passionate builders who love solving hard problems and shipping beautiful products.</p>
+          <div class="team-grid">
+            <div class="tm" *ngFor="let m of team">
+              <div class="tm-avatar" [style.background]="m.bg">{{ m.emoji }}</div>
+              <div class="tm-name">{{ m.name }}</div>
+              <div class="tm-role">{{ m.role }}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="location-badge">
+          <div class="lb-icon">
+            <mat-icon>location_on</mat-icon>
+          </div>
+          <div>
+            <div class="lb-val">India</div>
+            <div class="lb-sub">Based in · Serving Worldwide</div>
+          </div>
+        </div> -->
+      </div>
+
+      <!-- Text -->
+      <div class="about-text">
+        <div class="sec-hd reveal" style="text-align:left; margin: 0 0 2rem 0">
+          <div class="eyebrow"><mat-icon>info</mat-icon>About BlueKod</div>
+          <h2 class="sec-title">We craft digital<br><span class="grad">experiences</span></h2>
+          <div class="sec-divider" style="margin: 0.75rem 0 0"></div>
+        </div>
+
+        <p class="about-para reveal">
+          BlueKod was founded with a single mission — to make world-class technology accessible to businesses of every size.
+          What started as a two-person freelance duo has grown into a tight-knit team of engineers, designers, and AI
+          specialists united by a love for clean code and beautiful interfaces.
+        </p>
+        <p class="about-para reveal">
+          We partner with startups and established brands alike, acting as your extended technical team.
+          Whether you need a rapid MVP or a production-grade platform, we bring the same level of craft and care to every project.
+        </p>
+
+        <div class="values reveal">
+          <div class="value-item" *ngFor="let v of values">
+            <mat-icon>check_circle</mat-icon>
+            <span>{{ v }}</span>
+          </div>
+        </div>
+
+        <button mat-raised-button class="btn-start-project reveal" (click)="scrollToContact()">
+          <mat-icon>handshake</mat-icon>
+          Start a Project
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>

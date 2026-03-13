@@ -1,0 +1,55 @@
+<footer class="footer">
+  <div class="section-inner">
+
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="brand-col">
+        <div class="ft-logo">
+          <span class="ft-icon"><mat-icon>code</mat-icon></span>
+          <span class="ft-text"><span class="ftb">Blue</span><span class="ftw">Kod</span></span>
+        </div>
+        <p class="tagline">Turning ideas into<br>powerful digital experiences.</p>
+        <div class="socials">
+          <a *ngFor="let s of socials" [href]="s.href" class="soc" [attr.aria-label]="s.label" target="_blank" rel="noopener">
+            <mat-icon>{{ s.icon }}</mat-icon>
+          </a>
+        </div>
+      </div>
+
+      <!-- Company -->
+      <nav class="link-col">
+        <span class="col-label">Company</span>
+        <ul>
+          <li *ngFor="let l of company"><a [href]="l.href">{{ l.label }}</a></li>
+        </ul>
+      </nav>
+
+      <!-- Services -->
+      <nav class="link-col">
+        <span class="col-label">Services</span>
+        <ul>
+          <li *ngFor="let l of services"><a [href]="l.href">{{ l.label }}</a></li>
+        </ul>
+      </nav>
+
+      <!-- Contact info -->
+      <div class="contact-col">
+        <span class="col-label">Contact</span>
+        <div class="contact-item" *ngFor="let c of contact">
+          <mat-icon>{{ c.icon }}</mat-icon>
+          <span>{{ c.value }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="ft-divider">
+
+    <div class="ft-bottom">
+      <span class="copy">&copy; {{ year }} BlueKod. All rights reserved.</span>
+      <!-- <span class="made">Built with <mat-icon class="heart">favorite</mat-icon> &amp; Angular Material</span> -->
+    </div>
+
+  </div>
+</footer>
