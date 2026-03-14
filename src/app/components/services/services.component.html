@@ -1,0 +1,80 @@
+<section class="services sec-top-line" id="services">
+  <div class="section-inner">
+
+    <div class="sec-hd reveal">
+      <div class="eyebrow"><mat-icon>star</mat-icon>What We Do</div>
+      <h2 class="sec-title">Our <span class="grad">Services</span></h2>
+      <div class="sec-divider"></div>
+      <p class="sec-sub" style="margin-top:1rem">End-to-end digital solutions tailored to your vision. Click <strong>Learn More</strong> to flip any card.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card-scene reveal"
+           *ngFor="let svc of services; let i = index"
+           [style.animation-delay]="(i * 0.1) + 's'">
+
+        <div class="card-flipper" [class.flipped]="svc.flipped">
+
+          <!-- ── FRONT ── -->
+          <div class="card-face card-front"
+               [style.--accent]="svc.accentColor"
+               [style.--accent-rgb]="svc.accentRgb">
+            <div class="face-glow"></div>
+
+            <div class="svc-icon" [style.background]="svc.gradient">
+              <mat-icon>{{ svc.icon }}</mat-icon>
+            </div>
+
+            <h3 class="svc-title">{{ svc.title }}</h3>
+            <p class="svc-tagline">{{ svc.tagline }}</p>
+            <p class="svc-desc">{{ svc.description }}</p>
+
+            <div class="svc-tags">
+              <span class="tag" *ngFor="let tag of svc.tags">{{ tag }}</span>
+            </div>
+
+            <button class="btn-flip" (click)="flip(svc)">
+              <span>Learn More</span>
+              <mat-icon>flip</mat-icon>
+            </button>
+          </div>
+
+          <!-- ── BACK ── -->
+          <div class="card-face card-back"
+               [style.--accent]="svc.accentColor"
+               [style.--accent-rgb]="svc.accentRgb">
+            <div class="back-stripe" [style.background]="svc.gradient"></div>
+
+            <div class="back-icon" [style.background]="svc.gradient">
+              <mat-icon>{{ svc.icon }}</mat-icon>
+            </div>
+
+            <h3 class="back-title">{{ svc.title }}</h3>
+            <!-- <p class="back-price">{{ svc.price }}</p> -->
+
+            <ul class="back-points">
+              <li *ngFor="let pt of svc.backPoints">
+                <mat-icon>check_circle</mat-icon>
+                <span>{{ pt }}</span>
+              </li>
+            </ul>
+
+            <button class="btn-flip btn-flip-back" (click)="flip(svc)">
+              <mat-icon>arrow_back</mat-icon>
+              <span>Back</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+     <div class="svc-cta reveal">
+      <p class="cta-text">Don't see what you need? We do custom work too.</p>
+      <button mat-stroked-button class="btn-talk" (click)="scrollToContact()">
+        <mat-icon>chat_bubble_outline</mat-icon>
+        Let's Talk
+      </button>
+    </div>
+
+  </div>
+</section>

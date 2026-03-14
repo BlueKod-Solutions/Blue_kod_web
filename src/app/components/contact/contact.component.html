@@ -1,0 +1,180 @@
+<section class="contact sec-top-line" id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+
+      <!-- ── Info column ── -->
+      <div class="contact-info">
+        <div class="sec-hd reveal" style="text-align:left; margin:0 0 1.5rem 0">
+          <div class="eyebrow"><mat-icon>contact_mail</mat-icon>Get In Touch</div>
+          <h2 class="sec-title">Let's build<br><span class="grad">something great</span></h2>
+          <div class="sec-divider" style="margin:0.75rem 0 0"></div>
+          <p class="sec-sub" style="margin-top:1rem">
+            Have a project in mind? Send us a message and we will get back to you within 24 hours.
+            Every submission is securely stored in our database.
+          </p>
+        </div>
+
+        <div class="info-item reveal" *ngFor="let item of contactItems">
+          <div class="info-icon"><mat-icon>{{ item.icon }}</mat-icon></div>
+          <div>
+            <div class="info-label">{{ item.label }}</div>
+            <div class="info-value">{{ item.value }}</div>
+          </div>
+        </div>
+
+        <!-- <div class="social-row reveal">
+          <a href="#" class="soc-btn" aria-label="GitHub">   <mat-icon>code</mat-icon></a>
+          <a href="#" class="soc-btn" aria-label="LinkedIn"> <mat-icon>work</mat-icon></a>
+          <a href="#" class="soc-btn" aria-label="Twitter">  <mat-icon>public</mat-icon></a>
+          <a href="#" class="soc-btn" aria-label="Instagram"><mat-icon>photo_camera</mat-icon></a>
+        </div> -->
+
+        <!-- DB badge -->
+        <div class="db-badge reveal">
+          <mat-icon>storage</mat-icon>
+          <span>Submissions are stored securely in <strong>Database</strong></span>
+        </div>
+      </div>
+
+      <!-- ── Form column ── -->
+      <!--
+        [class.card-entered] drives the scroll-in entrance transition.
+        The card starts invisible/shifted and transitions to visible when
+        the section scrolls into view (controlled by IntersectionObserver in TS).
+      -->
+      <div class="contact-form-card reveal" [class.card-entered]="cardVisible">
+
+        <!-- Success state -->
+        <div class="form-success" *ngIf="submitted">
+          <mat-icon class="success-icon">check_circle</mat-icon>
+          <h3>Message Sent!</h3>
+          <p>Thank you for reaching out. Your details have been saved and we will get back to you within 24 hours.</p>
+          <button mat-stroked-button class="btn-back" (click)="resetForm()">
+            <mat-icon>arrow_back</mat-icon> Send Another
+          </button>
+        </div>
+
+        <!-- Form -->
+        <div class="form-body" *ngIf="!submitted">
+
+          <!--
+            Form title with scroll-triggered character animation.
+            Each letter drops in with a stagger when titleVisible becomes true.
+            Spaces are rendered as non-breaking spaces to keep layout intact.
+          -->
+          <h3 class="form-title">
+            <ng-container *ngIf="titleVisible">
+              <span
+                *ngFor="let ch of 'Send us a message'.split(''); let i = index"
+                class="title-char"
+                [style.animation-delay]="(i * 0.04) + 's'">
+                <ng-container *ngIf="ch !== ' '">{{ ch }}</ng-container>
+                <ng-container *ngIf="ch === ' '">&nbsp;</ng-container>
+              </span>
+            </ng-container>
+            <!-- Keeps the title row height reserved before animation fires -->
+            <span class="title-placeholder" *ngIf="!titleVisible" aria-hidden="true">Send us a message</span>
+          </h3>
+
+          <!-- Server error banner -->
+          <div class="error-banner" *ngIf="serverError">
+            <mat-icon>error_outline</mat-icon>
+            <span>{{ serverError }}</span>
+          </div>
+
+          <!-- Name row — unchanged -->
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="full-w">
+              <mat-label>First Name *</mat-label>
+              <input matInput [(ngModel)]="form.firstName" name="firstName" placeholder="John" [disabled]="loading">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-w">
+              <mat-label>Last Name</mat-label>
+              <input matInput [(ngModel)]="form.lastName" name="lastName" placeholder="Doe" [disabled]="loading">
+            </mat-form-field>
+          </div>
+
+          <!-- Email — unchanged -->
+          <mat-form-field appearance="outline" class="full-w">
+            <mat-label>Email Address *</mat-label>
+            <input matInput type="email" [(ngModel)]="form.email" name="email" placeholder="john@example.com" [disabled]="loading">
+            <mat-icon matSuffix>mail</mat-icon>
+          </mat-form-field>
+
+          <!--
+            Phone number field — NEW.
+            Country code select on the left, number input on the right,
+            wrapped in the same mat-form-field outline style as the rest.
+          -->
+          <mat-form-field appearance="outline" class="full-w phone-field">
+            <mat-label>Phone Number</mat-label>
+            <div class="phone-input-wrap" matPrefix>
+              <div class="code-select-wrap">
+                <select
+                  class="country-code-select"
+                  [(ngModel)]="form.countryCode"
+                  name="countryCode"
+                  [disabled]="loading"
+                  aria-label="Country code">
+                  <option *ngFor="let c of countryCodes" [value]="c.code">
+                    {{ c.flag }} {{ c.code }}
+                  </option>
+                </select>
+                <!-- Chevron indicator — click anywhere on the wrapper opens the native dropdown -->
+                <span class="code-chevron">›</span>
+              </div>
+              <span class="phone-divider"></span>
+            </div>
+            <input
+              matInput
+              type="tel"
+              [(ngModel)]="form.phone"
+              name="phone"
+              placeholder="Enter phone number"
+              [disabled]="loading"
+              class="phone-number-input"
+              pattern="^\d{10}$"
+              maxlength="10"
+              minlength="10"
+              required
+              #phoneInput="ngModel">
+            <mat-error *ngIf="phoneInput.invalid && phoneInput.touched">
+              Phone number must be exactly 10 digits.
+            </mat-error>
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+
+          <!-- Service select — unchanged -->
+          <mat-form-field appearance="outline" class="full-w">
+            <mat-label>Service Needed</mat-label>
+            <mat-select [(ngModel)]="form.service" name="service" [disabled]="loading">
+              <mat-option value="">— Select a service —</mat-option>
+              <mat-option *ngFor="let s of services" [value]="s">{{ s }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <!-- Message — unchanged -->
+          <mat-form-field appearance="outline" class="full-w">
+            <mat-label>Message *</mat-label>
+            <textarea matInput rows="4" [(ngModel)]="form.message" name="message"
+                      placeholder="Tell us about your project..." [disabled]="loading"></textarea>
+            <mat-hint align="end">{{ form.message.length }} / 2000</mat-hint>
+          </mat-form-field>
+
+          <!-- Submit button — unchanged -->
+          <button mat-raised-button class="btn-submit" (click)="onSubmit()" [disabled]="loading">
+            <mat-icon *ngIf="!loading">send</mat-icon>
+            <mat-icon *ngIf="loading" class="spin">refresh</mat-icon>
+            {{ loading ? 'Saving to database…' : 'Send Message' }}
+          </button>
+
+          <p class="form-note">
+            <mat-icon>lock</mat-icon>
+            Your data is encrypted and stored securely in Database.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>

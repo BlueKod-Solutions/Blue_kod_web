@@ -1,0 +1,55 @@
+<footer class="footer">
+  <div class="section-inner">
+
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="brand-col">
+        <div class="ft-logo">
+          <img src="assets/bluekod-logo.png" alt="BlueKod" class="ft-logo-img" />
+        </div>
+        <p class="tagline">Turning ideas into<br>powerful digital experiences.</p>
+        <div class="socials">
+          <a href="https://github.com"    class="soc" aria-label="GitHub"    target="_blank" rel="noopener"><mat-icon>code</mat-icon></a>
+          <a href="https://linkedin.com"  class="soc" aria-label="LinkedIn"  target="_blank" rel="noopener"><mat-icon>work</mat-icon></a>
+          <a href="https://t.me/bluekod" class="soc" aria-label="Telegram"  target="_blank" rel="noopener"><mat-icon>send</mat-icon></a>
+          <a href="mailto:admin@bluekod.com" class="soc" aria-label="Email"  target="_blank" rel="noopener"><mat-icon>mail</mat-icon></a>
+        </div>
+      </div>
+
+      <!-- Company -->
+      <nav class="link-col">
+        <span class="col-label">Company</span>
+        <ul>
+          <li *ngFor="let l of company"><a [href]="l.href">{{ l.label }}</a></li>
+        </ul>
+      </nav>
+
+      <!-- Services -->
+      <nav class="link-col">
+        <span class="col-label">Services</span>
+        <ul>
+          <li *ngFor="let l of services"><a [href]="l.href">{{ l.label }}</a></li>
+        </ul>
+      </nav>
+
+      <!-- Contact -->
+      <div class="contact-col">
+        <span class="col-label">Contact</span>
+        <div class="contact-item" *ngFor="let c of contact">
+          <mat-icon>{{ c.icon }}</mat-icon>
+          <span>{{ c.value }}</span>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="ft-divider">
+
+    <!-- Copyright centered -->
+    <div class="ft-bottom">
+      <span class="copy">&copy; 2026 BlueKod. All rights reserved.</span>
+    </div>
+
+  </div>
+</footer>

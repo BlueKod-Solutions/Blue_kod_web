@@ -1,0 +1,66 @@
+<!-- Floating button -->
+<button class="chat-fab" [class.open]="isOpen" (click)="toggle()" aria-label="Toggle chat">
+  <mat-icon>{{ isOpen ? 'close' : 'chat' }}</mat-icon>
+</button>
+
+<!-- Chat window -->
+<div class="chat-window" [class.open]="isOpen">
+
+  <!-- Header -->
+  <div class="chat-header">
+    <div class="ch-avatar"><mat-icon>smart_toy</mat-icon></div>
+    <div class="ch-info">
+      <div class="ch-name">BlueKod Assistant</div>
+      <div class="ch-status">
+        <span class="status-dot"></span>
+        Online · Typically replies instantly
+      </div>
+    </div>
+    <button mat-icon-button class="ch-close" (click)="toggle()" aria-label="Close">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <!-- Messages -->
+  <div class="chat-messages" #msgList>
+    <div
+      *ngFor="let msg of messages"
+      class="msg"
+      [class.msg-bot]="!msg.isUser"
+      [class.msg-user]="msg.isUser"
+      [innerHTML]="msg.text | bkBold">
+    </div>
+
+    <!-- Typing indicator -->
+    <div class="msg msg-bot typing-indicator" *ngIf="isTyping">
+      <span class="tdot"></span>
+      <span class="tdot"></span>
+      <span class="tdot"></span>
+    </div>
+  </div>
+
+  <!-- Quick replies -->
+  <div class="quick-replies" *ngIf="showQuickReplies">
+    <button
+      *ngFor="let qr of quickReplies"
+      class="quick-btn"
+      (click)="quickAsk(qr.query)">
+      {{ qr.label }}
+    </button>
+  </div>
+
+  <!-- Input -->
+  <div class="chat-input-row">
+    <input
+      class="chat-input"
+      type="text"
+      [(ngModel)]="userInput"
+      placeholder="Type your message…"
+      (keydown)="onKeydown($event)"
+      [disabled]="isTyping">
+    <button mat-icon-button class="send-btn" (click)="send()" [disabled]="!userInput.trim() || isTyping">
+      <mat-icon>send</mat-icon>
+    </button>
+  </div>
+
+</div>

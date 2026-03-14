@@ -1,0 +1,44 @@
+<header class="navbar" [class.scrolled]="scrolled">
+  <div class="navbar-inner">
+
+    <!-- Logo (actual image) -->
+    <a class="logo" href="#" (click)="scrollTo('home')">
+      <img src="assets/bluekod-logo.png" alt="BlueKod Logo" class="logo-img" />
+    </a>
+
+    <span class="spacer"></span>
+
+    <!-- Desktop nav links (right side only) -->
+    <nav class="nav-links desktop-only">
+      <a *ngFor="let link of navLinks"
+         [href]="'#' + link.href"
+         class="nav-link"
+         (click)="$event.preventDefault(); scrollTo(link.href)">
+        {{ link.label }}
+      </a>
+    </nav>
+
+    <!-- Mobile hamburger -->
+    <button class="ham-btn mobile-only" (click)="toggleMobile()" [attr.aria-label]="mobileOpen ? 'Close menu' : 'Open menu'">
+      <span class="ham-line" [class.open]="mobileOpen"></span>
+      <span class="ham-line" [class.open]="mobileOpen"></span>
+      <span class="ham-line" [class.open]="mobileOpen"></span>
+    </button>
+  </div>
+
+  <!-- Scroll progress line -->
+  <div class="scroll-progress-bar">
+    <div class="scroll-progress-fill" [style.width.%]="scrollProgress"></div>
+  </div>
+
+  <!-- Mobile dropdown -->
+  <nav class="mobile-menu" [class.open]="mobileOpen">
+    <a *ngFor="let link of navLinks; let i = index"
+       [href]="'#' + link.href"
+       class="mob-link"
+       [style.animation-delay]="(i * 0.07) + 's'"
+       (click)="$event.preventDefault(); scrollTo(link.href)">
+      {{ link.label }}
+    </a>
+  </nav>
+</header>

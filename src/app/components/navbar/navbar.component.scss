@@ -1,0 +1,185 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &.scrolled .navbar-inner {
+    background: rgba(7, 14, 26, 0.94);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 32px rgba(4, 8, 15, 0.5);
+    height: 64px;
+  }
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  height: 76px;
+  padding: 0 2.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  transition: height 0.35s ease, background 0.35s ease;
+
+  @media (max-width: 599px) { padding: 0 1.25rem; }
+}
+
+/* ── Logo image ── */
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  height: 46px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(59,130,246,0.35));
+  transition: filter 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    filter: drop-shadow(0 0 18px rgba(96,165,250,0.6));
+    transform: scale(1.04);
+  }
+}
+
+.spacer { flex: 1 1 auto; }
+
+/* ── Desktop nav links ── */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--bk-t2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  letter-spacing: 0.02em;
+  transition: all 0.2s ease;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 50%; right: 50%;
+    height: 1.5px;
+    background: var(--bk-accent);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    color: var(--bk-t1);
+    background: rgba(59, 130, 246, 0.08);
+
+    &::after { left: 12%; right: 12%; }
+  }
+}
+
+/* ── Scroll progress bar ── */
+.scroll-progress-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2.5px;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.scroll-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1a3a7c, #3b82f6, #06b6d4);
+  border-radius: 0 2px 2px 0;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(59,130,246,0.6);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 50%;
+    transform: translateY(-50%);
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #60a5fa;
+    box-shadow: 0 0 10px #60a5fa;
+  }
+}
+
+/* ── Hamburger ── */
+.ham-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  background: none;
+  border: none; cursor: pointer;
+  padding: 4px;
+}
+
+.ham-line {
+  display: block;
+  height: 2px;
+  background: var(--bk-t1);
+  border-radius: 2px;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+
+  &:nth-child(1).open { transform: translateY(7px) rotate(45deg); }
+  &:nth-child(2).open { opacity: 0; transform: scaleX(0); }
+  &:nth-child(3).open { transform: translateY(-7px) rotate(-45deg); }
+}
+
+/* ── Mobile menu ── */
+.mobile-menu {
+  position: absolute;
+  top: 100%; left: 0; right: 0;
+  background: rgba(7, 14, 26, 0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--bk-border);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease, padding 0.3s;
+
+  &.open {
+    max-height: 400px;
+    padding: 1rem 1.5rem 1.5rem;
+    opacity: 1;
+
+    .mob-link { animation: slideDown 0.3s ease both; }
+  }
+}
+
+.mob-link {
+  display: block;
+  text-decoration: none;
+  color: var(--bk-t2);
+  font-size: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  opacity: 0;
+
+  &:hover { color: var(--bk-t1); background: rgba(59, 130, 246, 0.1); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Responsive ── */
+.desktop-only { @media (max-width: 768px) { display: none !important; } }
+.mobile-only  { @media (min-width: 769px) { display: none !important; }
+                @media (max-width: 768px)  { display: flex !important; } }

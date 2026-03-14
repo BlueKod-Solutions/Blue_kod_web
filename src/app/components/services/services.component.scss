@@ -1,0 +1,239 @@
+.services {
+  padding: 6rem 0 5rem;
+  background: var(--bk-navy-800);
+  @media (max-width: 960px) { padding: 4rem 0; }
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 1100px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 599px)  { grid-template-columns: 1fr; }
+}
+
+/* ── 3D flip scene ── */
+.card-scene {
+  perspective: 1000px;
+  height: 420px;
+  cursor: pointer;
+}
+
+.card-flipper {
+  position: relative;
+  width: 100%; height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+
+  &.flipped { transform: rotateY(180deg); }
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  background: var(--bk-card-bg);
+  border: 1px solid var(--bk-card-brd);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: border-color 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    border-color: rgba(var(--accent-rgb), 0.4);
+    box-shadow: 0 20px 50px rgba(4,8,15,.5), 0 0 30px rgba(var(--accent-rgb), 0.12);
+  }
+}
+
+/* ── Front face ── */
+.card-front {}
+
+.face-glow {
+  position: absolute; top: 0; left: 10%; right: 10%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  .card-face:hover & { opacity: 1; }
+}
+
+.svc-icon {
+  width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 6px 20px rgba(4,8,15,.4);
+  mat-icon { color: #fff !important; font-size: 24px !important; width: 24px !important; height: 24px !important; }
+}
+
+.svc-title    { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; color: var(--bk-t1); margin: 0 0 0.2rem; letter-spacing: -0.02em; }
+.svc-tagline  { font-size: 0.75rem; color: var(--accent); font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; margin: 0 0 0.6rem; }
+.svc-desc     { font-size: 0.85rem; color: var(--bk-t2); line-height: 1.65; flex: 1; margin: 0 0 1rem; }
+
+.svc-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.25rem; }
+.tag {
+  font-size: 0.7rem; font-weight: 500;
+  color: var(--bk-t3); background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08); border-radius: 50px;
+  padding: 0.18rem 0.55rem;
+}
+
+/* ── Flip button ── */
+.btn-flip {
+  display: flex; align-items: center; gap: 0.4rem; justify-content: center;
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  color: var(--accent);
+  border-radius: 8px; padding: 0.6rem 1rem;
+  font-size: 0.85rem; font-weight: 600; font-family: var(--font-body);
+  cursor: pointer; width: 100%;
+  transition: all 0.25s ease;
+
+  mat-icon { font-size: 17px !important; width: 17px !important; height: 17px !important; transition: transform 0.4s; }
+  &:hover {
+    background: rgba(var(--accent-rgb), 0.2);
+    border-color: var(--accent);
+    box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.3);
+    mat-icon { transform: rotateY(180deg); }
+  }
+}
+
+/* ── Back face ── */
+.card-back {
+  transform: rotateY(180deg);
+  padding: 0;
+}
+
+.back-stripe {
+  height: 4px; flex-shrink: 0;
+  border-radius: 16px 16px 0 0;
+}
+
+.back-icon {
+  width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin: 1.25rem 1.75rem 0.5rem;
+  mat-icon { color: #fff !important; font-size: 20px !important; width: 20px !important; height: 20px !important; }
+}
+
+.back-title {
+  font-family: var(--font-display); font-size: 1.1rem; font-weight: 700;
+  color: var(--bk-t1); margin: 0 0 0.15rem;
+  padding: 0 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.back-price {
+  font-size: 0.8rem; font-weight: 700; color: var(--accent);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 0 1.75rem; margin: 0 0 1rem;
+}
+
+.back-points {
+  list-style: none; padding: 0 1.75rem; flex: 1; overflow: hidden;
+  display: flex; flex-direction: column; gap: 0.5rem;
+
+  li {
+    display: flex; align-items: flex-start; gap: 0.5rem;
+    font-size: 0.82rem; color: var(--bk-t2); line-height: 1.45;
+  }
+  mat-icon {
+    font-size: 15px !important; width: 15px !important; height: 15px !important;
+    color: var(--accent) !important; flex-shrink: 0; margin-top: 1px;
+  }
+}
+
+.btn-flip-back {
+  margin: 1rem 1.75rem 1.5rem;
+  width: calc(100% - 3.5rem);
+  justify-content: flex-start;
+  padding: 0.5rem 0.85rem;
+  font-size: 0.8rem;
+}
+/* ── CTA strip below service cards ── */
+.svc-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 3.5rem;
+  padding: 2.25rem 2rem;
+  text-align: center;
+
+  // Subtle bordered panel to frame the CTA
+  background: rgba(59, 130, 246, 0.04);
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+
+  // Glowing top-line accent
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 15%; right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+  }
+
+  @media (max-width: 599px) { padding: 1.75rem 1.25rem; }
+}
+
+.cta-text {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: var(--bk-t2);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.btn-talk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--bk-glow) !important;
+  border-color: rgba(180, 189, 202, 0.35) !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  height: 44px;
+  padding: 0 1.5rem !important;
+  border-radius: 50px !important;
+  letter-spacing: 0.03em;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  position: relative;
+  overflow: hidden;
+
+  mat-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  // Shine sweep on hover
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -80%;
+    width: 50%; height: 100%;
+    background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.12) 60%, transparent 80%);
+    transition: left 0.5s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    background: rgba(59, 130, 246, 0.1) !important;
+    border-color: var(--bk-accent) !important;
+    box-shadow: 0 6px 24px rgba(59, 130, 246, 0.25) !important;
+    transform: translateY(-2px);
+
+    mat-icon { transform: rotate(-15deg) scale(1.15); }
+    &::after  { left: 110%; }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
+  }
+}

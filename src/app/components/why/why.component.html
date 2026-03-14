@@ -1,0 +1,77 @@
+<section class="why" id="why">
+  <div class="section-inner">
+    <div class="why-grid">
+
+      <!-- Left: title + points — UNCHANGED -->
+      <div class="why-left">
+        <div class="sec-hd reveal" style="text-align:left; margin-bottom:2rem; margin-left:0">
+          <div class="eyebrow"><mat-icon>verified</mat-icon>Why Choose Us</div>
+          <h2 class="sec-title">Built different,<br><span class="grad">by design</span></h2>
+          <div class="sec-divider" style="margin:0.75rem 0 0"></div>
+          <p class="sec-sub" style="margin-top:1rem">
+            We're not just developers — we're strategic partners who care deeply about your success.
+            Here's what sets us apart.
+          </p>
+        </div>
+
+        <div class="points">
+          <div class="point reveal" *ngFor="let p of points">
+            <div class="point-icon" [style.background]="p.gradient">
+              <mat-icon>{{ p.icon }}</mat-icon>
+            </div>
+            <div class="point-body">
+              <h4>{{ p.title }}</h4>
+              <p>{{ p.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: animated stats visual — REPLACES metric cards -->
+      <div class="why-right reveal">
+
+        <!-- Outer glow ring -->
+        <div class="orb-scene">
+
+          <!-- Rotating orbit rings -->
+          <div class="orbit orbit-1"></div>
+          <div class="orbit orbit-2"></div>
+          <div class="orbit orbit-3"></div>
+
+          <!-- Central pulsing core -->
+          <div class="orb-core">
+            <div class="core-inner">
+              <mat-icon>code</mat-icon>
+              <span>BlueKod</span>
+            </div>
+          </div>
+
+          <!-- Floating value bubbles — what we offer, not numbers -->
+          <div class="stat-bubble"
+               *ngFor="let b of bubbles; let i = index"
+               [class]="'bubble-' + (i + 1)"
+               [style.--bubble-color]="b.color"
+               [style.animation-delay]="b.delay">
+            <div class="bubble-icon">
+              <mat-icon>{{ b.icon }}</mat-icon>
+            </div>
+            <div class="bubble-text">
+              <span class="bubble-val">{{ b.label }}</span>
+              <span class="bubble-lbl">{{ b.sub }}</span>
+            </div>
+          </div>
+
+          <!-- Decorative floating dots -->
+          <div class="float-dot dot-a"></div>
+          <div class="float-dot dot-b"></div>
+          <div class="float-dot dot-c"></div>
+          <div class="float-dot dot-d"></div>
+          <div class="float-dot dot-e"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
