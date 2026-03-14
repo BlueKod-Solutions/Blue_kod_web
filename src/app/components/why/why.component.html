@@ -2,7 +2,11 @@
   <div class="section-inner">
     <div class="why-grid">
 
+<<<<<<< HEAD
       <!-- Left: title + points — UNCHANGED -->
+=======
+      <!-- Left: title + points -->
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
       <div class="why-left">
         <div class="sec-hd reveal" style="text-align:left; margin-bottom:2rem; margin-left:0">
           <div class="eyebrow"><mat-icon>verified</mat-icon>Why Choose Us</div>
@@ -27,6 +31,7 @@
         </div>
       </div>
 
+<<<<<<< HEAD
       <!-- Right: animated stats visual — REPLACES metric cards -->
       <div class="why-right reveal">
 
@@ -70,6 +75,22 @@
 
         </div>
 
+=======
+      <!-- Right: metrics -->
+      <div class="why-right">
+        <div class="metric-card reveal" *ngFor="let m of metrics">
+          <div class="mc-icon" [style.background]="m.gradient">
+            <mat-icon>{{ m.icon }}</mat-icon>
+          </div>
+          <div class="mc-body">
+            <div class="mc-value">{{ m.value }}</div>
+            <div class="mc-label">{{ m.label }}</div>
+            <div class="mc-bar">
+              <div class="mc-fill" [style.width.%]="m.fillPercent"></div>
+            </div>
+          </div>
+        </div>
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
       </div>
 
     </div>

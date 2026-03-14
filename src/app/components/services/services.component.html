@@ -5,6 +5,7 @@
       <div class="eyebrow"><mat-icon>star</mat-icon>What We Do</div>
       <h2 class="sec-title">Our <span class="grad">Services</span></h2>
       <div class="sec-divider"></div>
+<<<<<<< HEAD
       <p class="sec-sub" style="margin-top:1rem">End-to-end digital solutions tailored to your vision. Click <strong>Learn More</strong> to flip any card.</p>
     </div>
 
@@ -69,6 +70,49 @@
       </div>
     </div>
      <div class="svc-cta reveal">
+=======
+      <p class="sec-sub" style="margin-top:1rem">End-to-end digital solutions tailored to your vision. We combine technical expertise with creative thinking.</p>
+    </div>
+
+    <div class="cards-grid">
+      <mat-card
+        *ngFor="let svc of services; let i = index"
+        class="svc-card reveal"
+        [style.--accent]="svc.accentColor"
+        [style.--accent-rgb]="svc.accentRgb"
+        [style.animation-delay]="(i * 0.12) + 's'">
+
+        <div class="card-top-glow"></div>
+
+        <!-- Icon -->
+        <div class="svc-icon" [style.background]="svc.gradient">
+          <mat-icon>{{ svc.icon }}</mat-icon>
+          <div class="icon-shine"></div>
+        </div>
+
+        <mat-card-content>
+          <h3 class="svc-title">{{ svc.title }}</h3>
+          <p class="svc-desc">{{ svc.description }}</p>
+          <div class="svc-tags">
+            <span class="tag" *ngFor="let tag of svc.tags">{{ tag }}</span>
+          </div>
+        </mat-card-content>
+
+        <mat-divider class="card-divider"></mat-divider>
+
+        <mat-card-actions class="card-actions">
+          <button mat-button class="btn-learn">
+            Learn More <mat-icon>arrow_forward</mat-icon>
+          </button>
+          <button mat-icon-button class="btn-save" aria-label="Save">
+            <mat-icon>bookmark_border</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+    <div class="svc-cta reveal">
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
       <p class="cta-text">Don't see what you need? We do custom work too.</p>
       <button mat-stroked-button class="btn-talk" (click)="scrollToContact()">
         <mat-icon>chat_bubble_outline</mat-icon>

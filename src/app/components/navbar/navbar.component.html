@@ -1,4 +1,5 @@
 <header class="navbar" [class.scrolled]="scrolled">
+<<<<<<< HEAD
   <div class="navbar-inner">
 
     <!-- Logo (actual image) -->
@@ -14,10 +15,30 @@
          [href]="'#' + link.href"
          class="nav-link"
          (click)="$event.preventDefault(); scrollTo(link.href)">
+=======
+  <mat-toolbar class="toolbar">
+
+    <!-- Logo -->
+    <a class="logo" href="#" (click)="scrollTo('home')">
+      <span class="logo-icon">
+        <mat-icon>code</mat-icon>
+      </span>
+      <span class="logo-text">
+        <span class="lb">Blue</span><span class="lw">Kod</span>
+      </span>
+    </a>
+
+    <!-- Desktop nav links -->
+    <nav class="nav-links desktop-only">
+      <a *ngFor="let link of navLinks"
+         [href]="link.href"
+         class="nav-link">
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
         {{ link.label }}
       </a>
     </nav>
 
+<<<<<<< HEAD
     <!-- Mobile hamburger -->
     <button class="ham-btn mobile-only" (click)="toggleMobile()" [attr.aria-label]="mobileOpen ? 'Close menu' : 'Open menu'">
       <span class="ham-line" [class.open]="mobileOpen"></span>
@@ -40,5 +61,41 @@
        (click)="$event.preventDefault(); scrollTo(link.href)">
       {{ link.label }}
     </a>
+=======
+    <span class="spacer"></span>
+
+    <!-- Desktop action buttons -->
+    <!-- <div class="nav-actions desktop-only">
+      <button mat-stroked-button class="btn-login">Login</button>
+      <button mat-raised-button class="btn-signup" (click)="scrollTo('contact')">
+        Sign Up
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div> -->
+
+    <!-- Mobile hamburger -->
+    <button mat-icon-button class="mobile-only ham-btn"
+            (click)="toggleMobile()"
+            [attr.aria-label]="mobileOpen ? 'Close menu' : 'Open menu'">
+      <mat-icon>{{ mobileOpen ? 'close' : 'menu' }}</mat-icon>
+    </button>
+
+  </mat-toolbar>
+
+  <!-- Mobile dropdown -->
+  <nav class="mobile-menu" [class.open]="mobileOpen">
+    <a *ngFor="let link of navLinks"
+       [href]="link.href"
+       class="mob-link"
+       (click)="closeMobile()">
+      {{ link.label }}
+    </a>
+    <!-- <div class="mob-actions">
+      <button mat-stroked-button class="btn-login mob-full">Login</button>
+      <button mat-raised-button class="btn-signup mob-full" (click)="scrollTo('contact')">
+        Sign Up
+      </button>
+    </div> -->
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
   </nav>
 </header>

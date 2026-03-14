@@ -22,11 +22,16 @@
           </div>
         </div>
 
+<<<<<<< HEAD
         <!-- <div class="social-row reveal">
+=======
+        <div class="social-row reveal">
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           <a href="#" class="soc-btn" aria-label="GitHub">   <mat-icon>code</mat-icon></a>
           <a href="#" class="soc-btn" aria-label="LinkedIn"> <mat-icon>work</mat-icon></a>
           <a href="#" class="soc-btn" aria-label="Twitter">  <mat-icon>public</mat-icon></a>
           <a href="#" class="soc-btn" aria-label="Instagram"><mat-icon>photo_camera</mat-icon></a>
+<<<<<<< HEAD
         </div> -->
 
         <!-- DB badge -->
@@ -43,6 +48,19 @@
         the section scrolls into view (controlled by IntersectionObserver in TS).
       -->
       <div class="contact-form-card reveal" [class.card-entered]="cardVisible">
+=======
+        </div>
+
+        <!-- DB badge -->
+        <!-- <div class="db-badge reveal">
+          <mat-icon>storage</mat-icon>
+          <span>Submissions are stored securely in <strong>MongoDB</strong></span>
+        </div> -->
+      </div>
+
+      <!-- ── Form column ── -->
+      <div class="contact-form-card reveal">
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 
         <!-- Success state -->
         <div class="form-success" *ngIf="submitted">
@@ -56,6 +74,7 @@
 
         <!-- Form -->
         <div class="form-body" *ngIf="!submitted">
+<<<<<<< HEAD
 
           <!--
             Form title with scroll-triggered character animation.
@@ -75,6 +94,9 @@
             <!-- Keeps the title row height reserved before animation fires -->
             <span class="title-placeholder" *ngIf="!titleVisible" aria-hidden="true">Send us a message</span>
           </h3>
+=======
+          <h3 class="form-title">Send us a message</h3>
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 
           <!-- Server error banner -->
           <div class="error-banner" *ngIf="serverError">
@@ -82,7 +104,10 @@
             <span>{{ serverError }}</span>
           </div>
 
+<<<<<<< HEAD
           <!-- Name row — unchanged -->
+=======
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           <div class="form-row">
             <mat-form-field appearance="outline" class="full-w">
               <mat-label>First Name *</mat-label>
@@ -94,13 +119,17 @@
             </mat-form-field>
           </div>
 
+<<<<<<< HEAD
           <!-- Email — unchanged -->
+=======
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           <mat-form-field appearance="outline" class="full-w">
             <mat-label>Email Address *</mat-label>
             <input matInput type="email" [(ngModel)]="form.email" name="email" placeholder="john@example.com" [disabled]="loading">
             <mat-icon matSuffix>mail</mat-icon>
           </mat-form-field>
 
+<<<<<<< HEAD
           <!--
             Phone number field — NEW.
             Country code select on the left, number input on the right,
@@ -145,6 +174,8 @@
           </mat-form-field>
 
           <!-- Service select — unchanged -->
+=======
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           <mat-form-field appearance="outline" class="full-w">
             <mat-label>Service Needed</mat-label>
             <mat-select [(ngModel)]="form.service" name="service" [disabled]="loading">
@@ -153,7 +184,10 @@
             </mat-select>
           </mat-form-field>
 
+<<<<<<< HEAD
           <!-- Message — unchanged -->
+=======
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           <mat-form-field appearance="outline" class="full-w">
             <mat-label>Message *</mat-label>
             <textarea matInput rows="4" [(ngModel)]="form.message" name="message"
@@ -161,7 +195,10 @@
             <mat-hint align="end">{{ form.message.length }} / 2000</mat-hint>
           </mat-form-field>
 
+<<<<<<< HEAD
           <!-- Submit button — unchanged -->
+=======
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           <button mat-raised-button class="btn-submit" (click)="onSubmit()" [disabled]="loading">
             <mat-icon *ngIf="!loading">send</mat-icon>
             <mat-icon *ngIf="loading" class="spin">refresh</mat-icon>
@@ -170,7 +207,11 @@
 
           <p class="form-note">
             <mat-icon>lock</mat-icon>
+<<<<<<< HEAD
             Your data is encrypted and stored securely in Database.
+=======
+            Your data is encrypted and stored securely in MongoDB.
+>>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
           </p>
         </div>
 
