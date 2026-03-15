@@ -1,9 +1,5 @@
 // src/app/components/contact/contact.component.ts
-<<<<<<< HEAD
 import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
-=======
-import { Component } from '@angular/core';
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,7 +23,6 @@ import { ContactService } from '../../services/contact.service';
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss'],
 })
-<<<<<<< HEAD
 export class ContactComponent implements OnInit, OnDestroy {
 
   contactItems: ContactItem[] = [
@@ -36,15 +31,6 @@ export class ContactComponent implements OnInit, OnDestroy {
     { icon: 'schedule',     label: 'Working Hours',    value: 'Mon – Sat, 9am – 6pm IST' },
     { icon: 'location_on',  label: 'Location',         value: 'Remote — Available Worldwide' },
     { icon: 'phone',        label: 'Phone / WhatsApp', value: '+91 7026032850/ 9972654250' },
-=======
-export class ContactComponent {
-
-  contactItems: ContactItem[] = [
-    { icon: 'mail_outline', label: 'Email',           value: 'Admin@bluekod.com' },
-    { icon: 'schedule',     label: 'Working Hours',   value: 'Mon – Fri, 9am – 6pm IST' },
-    { icon: 'location_on',  label: 'Location',        value: 'Remote — Available Worldwide' },
-    { icon: 'phone',        label: 'Phone / WhatsApp',value: '+91 98765 43210' },
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
   ];
 
   services = [
@@ -55,7 +41,6 @@ export class ContactComponent {
     'Something Custom',
   ];
 
-<<<<<<< HEAD
   // Country codes for the phone field selector
   countryCodes = [
     { flag: '🇮🇳', code: '+91',  label: 'IN' },
@@ -114,18 +99,6 @@ export class ContactComponent {
     if (this.observer) this.observer.disconnect();
   }
 
-=======
-  form = { firstName: '', lastName: '', email: '', service: '', message: '' };
-  submitted   = false;
-  loading     = false;
-  serverError = '';
-
-  constructor(
-    private snackBar: MatSnackBar,
-    private contactService: ContactService,
-  ) {}
-
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
   onSubmit(): void {
     if (!this.form.firstName.trim() || !this.form.email.trim() || !this.form.message.trim()) {
       this.snackBar.open('Please fill in all required fields.', 'OK', {
@@ -133,7 +106,6 @@ export class ContactComponent {
       });
       return;
     }
-<<<<<<< HEAD
     this.loading     = true;
     this.serverError = '';
 
@@ -150,12 +122,6 @@ export class ContactComponent {
     };
 
     this.contactService.submitContact(payload).subscribe({
-=======
-    this.loading = true;
-    this.serverError = '';
-
-    this.contactService.submitContact(this.form).subscribe({
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
       next: (res) => {
         this.loading   = false;
         this.submitted = true;
@@ -172,7 +138,6 @@ export class ContactComponent {
   }
 
   resetForm(): void {
-<<<<<<< HEAD
     this.form = {
       firstName:   '',
       lastName:    '',
@@ -187,10 +152,5 @@ export class ContactComponent {
     // Re-trigger title animation on "Send Another"
     this.titleVisible = false;
     setTimeout(() => { this.titleVisible = true; }, 50);
-=======
-    this.form        = { firstName: '', lastName: '', email: '', service: '', message: '' };
-    this.submitted   = false;
-    this.serverError = '';
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
   }
 }

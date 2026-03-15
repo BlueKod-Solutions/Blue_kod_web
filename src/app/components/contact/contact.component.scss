@@ -1,12 +1,9 @@
-<<<<<<< HEAD
 // ─────────────────────────────────────────────────────────────────
 //  contact.component.scss
 //  Original styles are 100% preserved.
 //  NEW additions are clearly marked with "── NEW ──" comments.
 // ─────────────────────────────────────────────────────────────────
 
-=======
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 .contact {
   padding: 6rem 0;
   background: var(--bk-navy-900);
@@ -58,18 +55,13 @@
   &:hover { background: rgba(59,130,246,.15); border-color: rgba(59,130,246,.4); color: var(--bk-glow); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59,130,246,.2); }
 }
 
-<<<<<<< HEAD
 // ── NEW ── Form card scroll-triggered entrance
 // The card starts invisible + shifted down. When IntersectionObserver
 // fires in the TS, it adds .card-entered which transitions it into view.
-=======
-// Form card
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 .contact-form-card {
   background: var(--bk-card-bg); border: 1px solid var(--bk-card-brd);
   border-radius: 20px; padding: 2.5rem; position: relative; overflow: hidden;
 
-<<<<<<< HEAD
   // Initial hidden state (before scroll trigger)
   opacity: 0;
   transform: translateY(36px) scale(0.98);
@@ -95,14 +87,10 @@
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
     background: linear-gradient(135deg, #1a3a7c, #3b82f6);
   }
-=======
-  &::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(135deg,#1a3a7c,#3b82f6); }
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 
   @media (max-width: 599px) { padding: 1.5rem; }
 }
 
-<<<<<<< HEAD
 // ── NEW ── Form title with per-character drop animation
 // .title-char is each letter span; animation fires when titleVisible = true.
 // .title-placeholder keeps row height reserved before chars render (prevents layout jump).
@@ -146,9 +134,6 @@
   user-select: none;
   pointer-events: none;
 }
-=======
-.form-title { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: var(--bk-t1); margin-bottom: 1.5rem; }
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 
 .form-body { display: flex; flex-direction: column; gap: 0; }
 
@@ -156,7 +141,6 @@
 
 .full-w { width: 100%; margin-bottom: 0.5rem !important; }
 
-<<<<<<< HEAD
 // ── NEW ── Phone field with country code selector
 // Sits inside a standard mat-form-field outline — matches existing field style.
 .phone-field {
@@ -248,8 +232,6 @@
   padding-left: 0 !important;
 }
 
-=======
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
 // Override Angular Material form field colors for dark theme
 ::ng-deep {
   .contact .mat-mdc-text-field-wrapper { background: rgba(255,255,255,.04) !important; }

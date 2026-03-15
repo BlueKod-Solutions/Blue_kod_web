@@ -29,11 +29,7 @@ export class ChatbotComponent implements AfterViewChecked {
 
   quickReplies: QuickReply[] = [
     { label: 'Our Services',  query: 'What services do you offer?' },
-<<<<<<< HEAD
     // { label: 'Pricing',       query: 'What is your pricing?' },
-=======
-    { label: 'Pricing',       query: 'What is your pricing?' },
->>>>>>> fa3d71a791777d93ddab996af85eecf12ebaa5a1
     { label: 'Timeline',      query: 'How long does a project take?' },
     { label: 'Get Started',   query: 'How do I get started?' },
   ];
