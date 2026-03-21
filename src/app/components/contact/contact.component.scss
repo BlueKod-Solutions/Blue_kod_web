@@ -141,95 +141,184 @@
 
 .full-w { width: 100%; margin-bottom: 0.5rem !important; }
 
-// ── NEW ── Phone field with country code selector
-// Sits inside a standard mat-form-field outline — matches existing field style.
-.phone-field {
-  // Ensure the prefix (country code) aligns with the input text
-  ::ng-deep .mat-mdc-form-field-text-prefix {
-    align-self: center !important;
-    padding-right: 0 !important;
-  }
+// ── Phone row — custom container replacing mat-form-field ─────────
+// Plain div styled to match mat-form-field outline. Dropdown is NOT
+// inside matPrefix so Angular Material never intercepts click events.
+
+.phone-row-wrap {
+  width: 100%;
+  // mat-form-field MDC adds ~1.25em subscript space below every field.
+  // Match that exactly so the phone row has the same vertical rhythm.
+  margin-bottom: calc(0.5rem + 1.25em);
+  position: relative;
 }
 
-.phone-input-wrap {
+.phone-row-label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--bk-t3);
+  margin-bottom: 0.35rem;
+  padding-left: 0.15rem;
+}
+
+.phone-row-inner {
   display: flex;
   align-items: center;
-  gap: 0;
+  height: 56px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(59,130,246,.25);
+  border-radius: 4px;
+  overflow: visible;
+  transition: border-color 0.2s ease;
+
+  &.focused { border-color: var(--bk-accent, #3b82f6); }
+  &:hover   { border-color: rgba(59,130,246,.45); }
 }
 
-// Wrapper holds the select + the chevron icon as a single clickable unit
+.phone-suffix-icon {
+  font-size: 18px !important;
+  color: var(--bk-t3) !important;
+  flex-shrink: 0;
+  margin-right: 0.75rem;
+}
+
+.phone-row-error {
+  font-size: 0.75rem;
+  color: #f87171;
+  margin-top: 0.25rem;
+  padding-left: 0.15rem;
+}
+
+// ── Country-code dropdown ──────────────────────────────────────────
+
 .code-select-wrap {
   position: relative;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  height: 100%;
 }
 
-// Native <select> styled to blend with the dark theme
-// appearance:none removes the browser default arrow — we add our own chevron below
-.country-code-select {
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--bk-t1);
-  font-family: var(--font-body);
+.code-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.5rem 0 0.75rem;
+  height: 100%;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 0.8; }
+}
+
+.code-flag-img {
+  width: 22px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.code-value {
   font-size: 0.875rem;
   font-weight: 600;
-  cursor: pointer;
-  // Right padding makes room for the chevron character
-  padding: 0 1.4rem 0 0.5rem;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  option {
-    background: var(--bk-navy-800);
-    color: var(--bk-t1);
-    font-size: 0.875rem;
-  }
-
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  // Highlight on hover/focus so user knows it's clickable
-  &:hover  { color: var(--bk-glow); }
-  &:focus  { color: var(--bk-glow); }
+  color: var(--bk-t1);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
-// Custom chevron "›" — positioned at the right of the select, pointer-events:none
-// so clicks pass through to the native <select> and open the dropdown
 .code-chevron {
-  position: absolute;
-  right: 0.2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  line-height: 1;
+  font-size: 0.65rem;
   color: var(--bk-t3);
-  pointer-events: none;       // clicks pass through to the select underneath
-  transition: color 0.2s ease, transform 0.2s ease;
-  user-select: none;
+  transition: transform 0.2s ease, color 0.2s ease;
+  line-height: 1;
+  margin-left: 2px;
 
-  // Brighten when select is hovered/focused
-  .country-code-select:hover ~ &,
-  .country-code-select:focus ~ & {
-    color: var(--bk-glow);
-    transform: translateY(-50%) rotate(90deg); // rotates › into a ˅ on open
-  }
+  &.rotated { transform: rotate(180deg); color: var(--bk-glow, #60a5fa); }
 }
+
+// Panel — position:absolute anchored to .code-select-wrap
+// No fixed, no transparency, no CSS encapsulation fight
+.code-dropdown-panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 1000;
+  min-width: 175px;
+  max-height: 240px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  background: #0c1a2e;
+  border: 1px solid rgba(59,130,246,.4);
+  border-radius: 10px;
+  box-shadow: 0 8px 28px rgba(0,0,0,.75), 0 2px 6px rgba(0,0,0,.5);
+  animation: dropIn 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  &::-webkit-scrollbar       { width: 4px; }
+  &::-webkit-scrollbar-track { background: #0c1a2e; }
+  &::-webkit-scrollbar-thumb { background: rgba(59,130,246,.35); border-radius: 2px; }
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-5px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+.code-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.55rem 0.9rem;
+  cursor: pointer;
+  background: #0c1a2e;
+  transition: background 0.12s ease;
+
+  &:hover    { background: #112540; }
+  &.selected { background: #0f2a4a; }
+}
+
+.opt-flag-img {
+  width: 22px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.opt-label { font-size: 0.8rem; color: #94a3b8; flex: 1; }
+.opt-code  { font-size: 0.8rem; color: #e2e8f0; font-weight: 600; }
+
+// ── end phone row / dropdown ───────────────────────────────────────
 
 // Thin vertical divider between code and number
 .phone-divider {
   display: inline-block;
   width: 1px;
-  height: 18px;
+  height: 22px;
   background: rgba(59, 130, 246, 0.3);
   margin: 0 0.5rem;
   flex-shrink: 0;
 }
 
-// The actual phone number input — override default matInput left padding
-// so it sits flush against the divider
+// Phone number text input
 .phone-number-input {
-  padding-left: 0 !important;
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--bk-t1);
+  font-size: 1rem;
+  font-family: var(--font-body);
+  padding: 0;
+  min-width: 0;
+
+  &::placeholder { color: var(--bk-t3); opacity: 0.7; }
+  &:disabled     { opacity: 0.5; cursor: not-allowed; }
 }
 
 // Override Angular Material form field colors for dark theme

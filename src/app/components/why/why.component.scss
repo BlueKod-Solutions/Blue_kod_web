@@ -1,9 +1,3 @@
-// ─────────────────────────────────────────────────────────────────────
-//  why.component.scss
-//  Left-side styles: 100% original (unchanged).
-//  Right-side: metric cards removed, replaced with animated orb scene.
-// ─────────────────────────────────────────────────────────────────────
-
 .why {
   padding: 6rem 0;
   background: var(--bk-navy-900);
@@ -52,7 +46,7 @@
   p  { font-size: 0.875rem; color: var(--bk-t2); line-height: 1.65; margin: 0; }
 }
 
-// ── Right side (NEW — replaces metric cards) ───────────────────────
+// ── Right side ──────────────────────────────────────────────────
 
 .why-right {
   display: flex;
@@ -64,15 +58,15 @@
   @media (max-width: 599px)  { min-height: 300px; }
 }
 
-// ── Orb scene container ───────────────────────────────────────────
+// ── Orb scene — made larger so bubbles sit cleanly outside the core
 .orb-scene {
   position: relative;
-  width: 380px;
-  height: 380px;
+  width: 520px;
+  height: 520px;
   flex-shrink: 0;
 
-  @media (max-width: 1080px) { width: 320px; height: 320px; }
-  @media (max-width: 599px)  { width: 270px; height: 270px; }
+  @media (max-width: 1080px) { width: 500px; height: 500px; }
+  @media (max-width: 599px)  { width: 300px; height: 300px; }
 }
 
 // ── Orbit rings ───────────────────────────────────────────────────
@@ -87,21 +81,21 @@
 
 .orbit-1 {
   width: 96%;  height: 96%;
-  border-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.18);
   animation-duration: 18s;
   border-style: dashed;
 }
 
 .orbit-2 {
   width: 72%;  height: 72%;
-  border-color: rgba(6, 182, 212, 0.18);
+  border-color: rgba(6, 182, 212, 0.16);
   animation-duration: 12s;
   animation-direction: reverse;
 }
 
 .orbit-3 {
   width: 46%;  height: 46%;
-  border-color: rgba(129, 140, 248, 0.2);
+  border-color: rgba(129, 140, 248, 0.18);
   animation-duration: 8s;
 }
 
@@ -110,53 +104,87 @@
   to   { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-// ── Central core ─────────────────────────────────────────────────
+// ── Central core — logo image, rounded-square (option B) ──────────
 .orb-core {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 110px; height: 110px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, #1a3a7c, #04080f);
-  border: 1px solid rgba(59, 130, 246, 0.35);
+  width: 120px; height: 120px;
+
+  // Option B squircle shape
+  border-radius: 28%;
+
+  // Dark bg so the black PNG background blends in perfectly
+  background: #04080f;
+
+  // Glowing blue border ring
+  border: 1.5px solid rgba(59, 130, 246, 0.5);
+  outline: 3px solid rgba(59, 130, 246, 0.08);
+  outline-offset: 4px;
+
   box-shadow:
-    0 0 40px rgba(59, 130, 246, 0.3),
-    0 0 80px rgba(59, 130, 246, 0.12),
-    inset 0 0 30px rgba(59, 130, 246, 0.1);
+    0 0 0 6px rgba(59, 130, 246, 0.06),
+    0 0 36px rgba(59, 130, 246, 0.3),
+    0 0 70px rgba(59, 130, 246, 0.12),
+    inset 0 0 28px rgba(59, 130, 246, 0.08);
+
   animation: corePulse 3.5s ease-in-out infinite;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
-  @media (max-width: 599px) { width: 86px; height: 86px; }
+  @media (max-width: 599px) { width: 90px; height: 90px; }
 }
 
 .core-inner {
-  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
-  mat-icon { font-size: 26px !important; color: #60a5fa !important;
-    filter: drop-shadow(0 0 8px rgba(96,165,250,0.8)); }
-  span {
-    font-family: var(--font-display);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: rgba(96, 165, 250, 0.75);
-    text-transform: uppercase;
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 10px;
+}
+
+// The icon image — fills the squircle, glow filter makes it pop
+.core-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 100%;
+  // Since the PNG has a black bg, mix-blend-mode lightens it to transparent-feel
+  mix-blend-mode: lighten;
+  filter:
+    drop-shadow(0 0 8px rgba(96, 165, 250, 0.7))
+    drop-shadow(0 0 16px rgba(59, 130, 246, 0.4))
+    brightness(1.05);
+  transition: filter 0.4s ease;
+
+  .orb-core:hover & {
+    filter:
+      drop-shadow(0 0 14px rgba(96, 165, 250, 0.9))
+      drop-shadow(0 0 28px rgba(59, 130, 246, 0.55))
+      brightness(1.1);
   }
 }
 
 @keyframes corePulse {
   0%, 100% {
-    box-shadow: 0 0 40px rgba(59,130,246,.3), 0 0 80px rgba(59,130,246,.12), inset 0 0 30px rgba(59,130,246,.1);
+    box-shadow:
+      0 0 0 6px rgba(59,130,246,.06),
+      0 0 36px rgba(59,130,246,.3),
+      0 0 70px rgba(59,130,246,.12),
+      inset 0 0 28px rgba(59,130,246,.08);
   }
   50% {
-    box-shadow: 0 0 60px rgba(59,130,246,.55), 0 0 120px rgba(59,130,246,.2), inset 0 0 40px rgba(59,130,246,.18);
+    box-shadow:
+      0 0 0 8px rgba(59,130,246,.1),
+      0 0 56px rgba(59,130,246,.5),
+      0 0 110px rgba(59,130,246,.2),
+      inset 0 0 40px rgba(59,130,246,.15);
   }
 }
 
 // ── Stat bubbles ──────────────────────────────────────────────────
-// 4 bubbles positioned at the 4 compass points of the outer orbit.
-// Each floats independently with a gentle up-down animation.
+// Pushed outward so they anchor on the outer dashed ring edge,
+// well away from the central logo.
 
 .stat-bubble {
   position: absolute;
@@ -172,30 +200,32 @@
   box-shadow:
     0 8px 28px rgba(4, 8, 15, 0.5),
     0 0 0 1px rgba(255,255,255,0.03);
-  animation: bubbleFloat 4s ease-in-out infinite;
+  animation: bubbleFloat ease-in-out infinite;
   white-space: nowrap;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10; // always above orbit rings
 
   &:hover {
     transform: scale(1.08) !important;
-    box-shadow: 0 12px 36px rgba(4,8,15,.6), 0 0 20px color-mix(in srgb, var(--bubble-color) 30%, transparent);
+    box-shadow: 0 12px 36px rgba(4,8,15,.6);
   }
 }
 
-// Individual float timings so they feel independent
-.bubble-1 { animation-delay: 0s;     animation-duration: 3.8s; }
-.bubble-2 { animation-delay: 0.9s;   animation-duration: 4.4s; }
-.bubble-3 { animation-delay: 1.8s;   animation-duration: 3.5s; }
-.bubble-4 { animation-delay: 2.6s;   animation-duration: 4.9s; }
+// Individual float durations
+.bubble-1 { animation-duration: 3.8s; }
+.bubble-2 { animation-duration: 4.4s; }
+.bubble-3 { animation-duration: 3.5s; }
+.bubble-4 { animation-duration: 4.9s; }
 
-// Compass positions (top, right, bottom, left relative to scene center)
-.bubble-1 { top:  -18px; left: 50%; transform: translateX(-50%); }
-.bubble-2 { right: -20px; top: 50%; transform: translateY(-50%); }
-.bubble-3 { bottom: -18px; left: 50%; transform: translateX(-50%); }
-.bubble-4 { left: -20px; top: 50%; transform: translateY(-50%); }
+// Positions — anchored at ~48% from center (just inside the outer orbit ring)
+// so bubbles sit ON the dashed ring, never over the logo
+.bubble-1 { top:  2%;  left: 50%; transform: translateX(-50%); } // top
+.bubble-2 { right: 0%; top: 50%;  transform: translateY(-50%); } // right
+.bubble-3 { bottom: 2%; left: 50%; transform: translateX(-50%); } // bottom
+.bubble-4 { left: 0%;  top: 50%;  transform: translateY(-50%); } // left
 
 @keyframes bubbleFloat {
-  0%, 100% { margin-top: 0;    }
+  0%, 100% { margin-top: 0; }
   50%       { margin-top: -9px; }
 }
 
@@ -217,7 +247,7 @@
 
 .bubble-val {
   font-family: var(--font-display);
-  font-size: 0.82rem;        /* was 1.05rem for big numbers — now fits a word */
+  font-size: 0.82rem;
   font-weight: 700;
   line-height: 1.1;
   color: #f0f6ff;
@@ -245,6 +275,6 @@
 .dot-e { width: 7px;  height: 7px;  background: rgba(245,158,11,.35); top: 50%;  left: 8%;   animation-duration: 5.8s; animation-delay: 1.5s; }
 
 @keyframes dotDrift {
-  0%, 100% { transform: translateY(0) ;  opacity: 1; }
+  0%, 100% { transform: translateY(0);    opacity: 1; }
   50%       { transform: translateY(-12px); opacity: 0.5; }
 }

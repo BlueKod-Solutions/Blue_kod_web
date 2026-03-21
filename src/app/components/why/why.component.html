@@ -27,10 +27,8 @@
         </div>
       </div>
 
-      <!-- Right: animated stats visual — REPLACES metric cards -->
+      <!-- Right: animated orb scene -->
       <div class="why-right reveal">
-
-        <!-- Outer glow ring -->
         <div class="orb-scene">
 
           <!-- Rotating orbit rings -->
@@ -38,15 +36,18 @@
           <div class="orbit orbit-2"></div>
           <div class="orbit orbit-3"></div>
 
-          <!-- Central pulsing core -->
+          <!-- Central core — BlueKod icon only, no text -->
           <div class="orb-core">
             <div class="core-inner">
-              <mat-icon>code</mat-icon>
-              <span>BlueKod</span>
+              <img
+                src="assets/BlueKod_Icon.png"
+                alt="BlueKod"
+                class="core-logo"
+              />
             </div>
           </div>
 
-          <!-- Floating value bubbles — what we offer, not numbers -->
+          <!-- Floating value bubbles — anchored on the outer orbit edge so they never overlap the logo -->
           <div class="stat-bubble"
                *ngFor="let b of bubbles; let i = index"
                [class]="'bubble-' + (i + 1)"
@@ -69,7 +70,6 @@
           <div class="float-dot dot-e"></div>
 
         </div>
-
       </div>
 
     </div>

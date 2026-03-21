@@ -18,7 +18,7 @@
           <div class="info-icon"><mat-icon>{{ item.icon }}</mat-icon></div>
           <div>
             <div class="info-label">{{ item.label }}</div>
-            <div class="info-value">{{ item.value }}</div>
+            <div class="info-value" [innerHTML]="item.value"></div>
           </div>
         </div>
 
@@ -102,47 +102,66 @@
           </mat-form-field>
 
           <!--
-            Phone number field — NEW.
-            Country code select on the left, number input on the right,
-            wrapped in the same mat-form-field outline style as the rest.
+            Phone number field — custom row outside mat-form-field.
+            The dropdown is NOT inside matPrefix anymore — that caused Angular Material
+            to intercept/cancel clicks on PC. The entire row is a styled div that
+            visually matches the mat-form-field outline style.
           -->
-          <mat-form-field appearance="outline" class="full-w phone-field">
-            <mat-label>Phone Number</mat-label>
-            <div class="phone-input-wrap" matPrefix>
-              <div class="code-select-wrap">
-                <select
-                  class="country-code-select"
-                  [(ngModel)]="form.countryCode"
-                  name="countryCode"
-                  [disabled]="loading"
-                  aria-label="Country code">
-                  <option *ngFor="let c of countryCodes" [value]="c.code">
-                    {{ c.flag }} {{ c.code }}
-                  </option>
-                </select>
-                <!-- Chevron indicator — click anywhere on the wrapper opens the native dropdown -->
-                <span class="code-chevron">›</span>
+          <div class="phone-row-wrap" >
+            <!-- <label class="phone-row-label" appearance="outline">Phone Number</label> -->
+            <div class="phone-row-inner" [class.focused]="phoneFocused">
+
+              <!-- Country code dropdown — sits outside mat-form-field entirely -->
+              <div class="code-select-wrap" [class.open]="codeDropOpen">
+
+                <div class="code-trigger" (click)="toggleCodeDrop()">
+                  <img class="code-flag-img" [src]="selectedCountry.flagUrl" [alt]="selectedCountry.label" width="20" height="14">
+                  <span class="code-value">{{ selectedCountry.code }}</span>
+                  <span class="code-chevron" [class.rotated]="codeDropOpen">▾</span>
+                </div>
+
+                <!-- Dropdown panel — absolute, not fixed -->
+                <ul
+                  class="code-dropdown-panel"
+                  role="listbox"
+                  *ngIf="codeDropOpen"
+                  (click)="$event.stopPropagation()">
+                  <li
+                    *ngFor="let c of countryCodes"
+                    role="option"
+                    class="code-option"
+                    [class.selected]="form.countryLabel === c.label"
+                    (click)="selectCountry(c)">
+                    <img class="opt-flag-img" [src]="c.flagUrl" [alt]="c.label" width="22" height="15">
+                    <span class="opt-label">{{ c.label }}</span>
+                    <span class="opt-code">{{ c.code }}</span>
+                  </li>
+                </ul>
               </div>
+
               <span class="phone-divider"></span>
+
+              <input
+                class="phone-number-input"
+                type="tel"
+                [(ngModel)]="form.phone"
+                name="phone"
+                placeholder="Enter phone number"
+                [disabled]="loading"
+                pattern="^\d{10}$"
+                maxlength="10"
+                minlength="10"
+                required
+                #phoneInput="ngModel"
+                (focus)="phoneFocused = true"
+                (blur)="phoneFocused = false">
+
+              <mat-icon class="phone-suffix-icon">phone</mat-icon>
             </div>
-            <input
-              matInput
-              type="tel"
-              [(ngModel)]="form.phone"
-              name="phone"
-              placeholder="Enter phone number"
-              [disabled]="loading"
-              class="phone-number-input"
-              pattern="^\d{10}$"
-              maxlength="10"
-              minlength="10"
-              required
-              #phoneInput="ngModel">
-            <mat-error *ngIf="phoneInput.invalid && phoneInput.touched">
+            <div class="phone-row-error" *ngIf="phoneInput.invalid && phoneInput.touched">
               Phone number must be exactly 10 digits.
-            </mat-error>
-            <mat-icon matSuffix>phone</mat-icon>
-          </mat-form-field>
+            </div>
+          </div>
 
           <!-- Service select — unchanged -->
           <mat-form-field appearance="outline" class="full-w">

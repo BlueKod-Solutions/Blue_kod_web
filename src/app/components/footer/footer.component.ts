@@ -26,8 +26,8 @@ export class FooterComponent {
 
   contact = [
     { icon: 'mail_outline', value: 'admin@bluekod.com' },
-    { icon: 'telegram',         value: '@bluekod' },
-    { icon: 'schedule',     value: 'Mon–Fri, 9am–6pm IST' },
+    { icon: 'telegram',         value: '@Info_BlueKod' },
+    { icon: 'schedule',     value: 'Mon–Sat, 9am–6pm IST' },
     { icon: 'location_on',  value: 'Remote · Worldwide' },
   ];
 }

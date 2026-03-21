@@ -1,5 +1,5 @@
 // src/app/components/contact/contact.component.ts
-import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,10 +27,10 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   contactItems: ContactItem[] = [
     { icon: 'mail_outline', label: 'Email',            value: 'admin@bluekod.com' },
-    { icon: 'telegram',          label: 'Telegram',          value: '@bluekod' },
+    { icon: 'telegram',          label: 'Telegram',          value: '@Info_BlueKod' },
     { icon: 'schedule',     label: 'Working Hours',    value: 'Mon – Sat, 9am – 6pm IST' },
     { icon: 'location_on',  label: 'Location',         value: 'Remote — Available Worldwide' },
-    { icon: 'phone',        label: 'Phone / WhatsApp', value: '+91 7026032850/ 9972654250' },
+    { icon: 'phone',        label: 'Phone / WhatsApp', value: '+91 7026032850 <br> +91 9972654250' },
   ];
 
   services = [
@@ -43,14 +43,14 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   // Country codes for the phone field selector
   countryCodes = [
-    { flag: '🇮🇳', code: '+91',  label: 'IN' },
-    { flag: '🇺🇸', code: '+1',   label: 'US' },
-    { flag: '🇬🇧', code: '+44',  label: 'GB' },
-    { flag: '🇦🇪', code: '+971', label: 'AE' },
-    { flag: '🇸🇬', code: '+65',  label: 'SG' },
-    { flag: '🇦🇺', code: '+61',  label: 'AU' },
-    { flag: '🇨🇦', code: '+1',   label: 'CA' },
-    { flag: '🇩🇪', code: '+49',  label: 'DE' },
+    { flagUrl: 'https://flagcdn.com/w40/in.png', code: '+91',  label: 'IN' },
+    { flagUrl: 'https://flagcdn.com/w40/us.png', code: '+1',   label: 'US' },
+    { flagUrl: 'https://flagcdn.com/w40/gb.png', code: '+44',  label: 'GB' },
+    { flagUrl: 'https://flagcdn.com/w40/ae.png', code: '+971', label: 'AE' },
+    { flagUrl: 'https://flagcdn.com/w40/sg.png', code: '+65',  label: 'SG' },
+    { flagUrl: 'https://flagcdn.com/w40/au.png', code: '+61',  label: 'AU' },
+    { flagUrl: 'https://flagcdn.com/w40/ca.png', code: '+1',   label: 'CA' },
+    { flagUrl: 'https://flagcdn.com/w40/de.png', code: '+49',  label: 'DE' },
   ];
 
   form = {
@@ -58,10 +58,37 @@ export class ContactComponent implements OnInit, OnDestroy {
     lastName:    '',
     email:       '',
     countryCode: '+91',   // default India
+    countryLabel: 'IN',   // default India label
     phone:       '',
     service:     '',
     message:     '',
   };
+
+  // ── Custom country-code dropdown state ──
+  codeDropOpen    = false;
+  phoneFocused    = false;
+  selectedCountry = this.countryCodes[0]; // default: India
+
+  toggleCodeDrop(): void {
+    this.codeDropOpen = !this.codeDropOpen;
+  }
+
+  selectCountry(c: { flagUrl: string; code: string; label: string }): void {
+    this.selectedCountry   = c;
+    this.form.countryCode  = c.code;
+    this.form.countryLabel = c.label;
+    this.codeDropOpen      = false;
+  }
+
+  // Close on outside click
+  @HostListener('document:click', ['$event'])
+  onDocClick(e: Event): void {
+    const wrap = this.host.nativeElement.querySelector('.code-select-wrap');
+    if (this.codeDropOpen && wrap && !wrap.contains(e.target as Node)) {
+      this.codeDropOpen = false;
+    }
+  }
+  // ── end dropdown ──
 
   submitted      = false;
   loading        = false;
@@ -142,11 +169,13 @@ export class ContactComponent implements OnInit, OnDestroy {
       firstName:   '',
       lastName:    '',
       email:       '',
-      countryCode: '+91',
-      phone:       '',
-      service:     '',
-      message:     '',
+      countryCode:  '+91',
+      countryLabel: 'IN',
+      phone:        '',
+      service:      '',
+      message:      '',
     };
+    this.selectedCountry = this.countryCodes[0];
     this.submitted   = false;
     this.serverError = '';
     // Re-trigger title animation on "Send Another"

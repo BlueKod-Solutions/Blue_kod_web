@@ -30,7 +30,7 @@ export class ServicesComponent {
       title: 'Website Development',
       tagline: 'Modern web apps that scale',
       description: 'Responsive and modern web applications using the latest technologies. From landing pages to full-stack platforms.',
-      tags: ['Angular', 'React', 'Node.js', 'TypeScript'],
+      tags: ['Angular', 'React', 'Node.js'],
       backPoints: [
         'Custom responsive design for all devices',
         'Performance-optimised, SEO-ready builds',
@@ -49,7 +49,7 @@ export class ServicesComponent {
       title: 'AI Development',
       tagline: 'Intelligent automation & LLMs',
       description: 'Custom AI solutions including ML models, automation pipelines, and intelligent chatbots.',
-      tags: ['Python', 'TensorFlow', 'LLMs', 'APIs'],
+      tags: ['Python', 'TensorFlow', 'LLMs'],
       backPoints: [
         'Custom LLM fine-tuning & prompt engineering',
         'AI chatbot & virtual assistant builds',
@@ -68,7 +68,7 @@ export class ServicesComponent {
       title: 'Logo & Brand Design',
       tagline: 'Identities that tell your story',
       description: 'Creative and professional brand identity designs. Logos, design systems, and visual assets.',
-      tags: ['Figma', 'Branding', 'Illustration', 'UI/UX'],
+      tags: ['Figma', 'Branding', 'Illustration'],
       backPoints: [
         'Primary & secondary logo variants',
         'Full brand guidelines document',
@@ -87,7 +87,7 @@ export class ServicesComponent {
       title: 'Domain & Web Hosting',
       tagline: 'Fast, secure, always online',
       description: 'Complete domain registration and managed web hosting solutions for businesses of all sizes.',
-      tags: ['cPanel', 'SSL', 'CDN', '99.9% Uptime'],
+      tags: ['cPanel', 'SSL', 'CDN'],
       backPoints: [
         'Custom domain registration & transfer',
         'Free SSL certificate included',
