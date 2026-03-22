@@ -1,43 +1,152 @@
 // src/controllers/contact.controller.js
 const Contact = require('../models/Contact');
+const nodemailer = require("nodemailer");
+
+// ─────────────────────────────────────────────
+//  SMTP CONFIG (Hostinger)
+// ─────────────────────────────────────────────
+const transporter = nodemailer.createTransport({
+  host: "smtp.hostinger.com",
+  port: 465,
+  secure: true,
+  auth: {
+    user: "admin@bluekod.com",      // ← your email
+    pass: "Admin@bluekod2026",    // ← your password
+  },
+});
+
+// ─────────────────────────────────────────────
+//  EMAIL FUNCTIONS
+// ─────────────────────────────────────────────
+async function sendLeadNotification(data) {
+  await transporter.sendMail({
+    from: '"BlueKod Leads" <admin@bluekod.com>',
+    to: [
+      "manojnaika2003@gmail.com",
+      "kpshashank.k2@gmail.com",
+      "padmaprasadchowta@gmail.com",
+      "shettysanath075@gmail.com"
+
+    ],
+    subject: "🚀 New Lead Generated",
+    html: `
+  <div style="font-family: Arial, sans-serif; color:#333;">
+    
+    <h2 style="color:#16a34a;">🚀 New Lead Alert!</h2>
+    
+    <p>A new potential client just reached out via the website.</p>
+
+    <div style="background:#f9fafb; padding:15px; border-radius:10px; margin-top:10px;">
+      
+      <p><strong>👤 Name:</strong> ${data.firstName} ${data.lastName}</p>
+      <p><strong>📧 Email:</strong> ${data.email}</p>
+      <p><strong>🛠 Service:</strong> ${data.service || 'Not specified'}</p>
+      
+      <p><strong>💬 Message:</strong></p>
+      <p style="background:#fff; padding:10px; border-left:4px solid #4f46e5;">
+        ${data.message}
+      </p>
+
+    </div>
+
+    <br/>
+
+    <p style="color:#555;">
+      👉 Make sure to follow up quickly — hot lead! 🔥
+    </p>
+
+    <hr style="margin-top:20px; border:none; border-top:1px solid #eee;" />
+
+    <p style="font-size:12px; color:#777;">
+      BlueKod Lead System
+    </p>
+  </div>
+`,
+  });
+}
+
+async function sendAutoReply(data) {
+  await transporter.sendMail({
+    from: '"BlueKod Team" <admin@bluekod.com>',
+    to: data.email,
+    subject: "Thanks for contacting BlueKod!",
+    html: `
+  <div style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    
+    <h2 style="color:#4f46e5;">Hey ${data.firstName} 👋</h2>
+    
+    <p>
+      Thanks for reaching out to <strong>BlueKod</strong> — we’re excited to hear from you! 🚀
+    </p>
+    
+    <p>
+      Your message just landed safely in our inbox, and our team is already taking a look.
+    </p>
+    
+    <p style="background:#f3f4f6; padding:12px; border-radius:8px;">
+      ⏳ We typically respond within <strong>24 hours</strong> (often much sooner 😉)
+    </p>
+
+    <p>
+      In the meantime, feel free to sit back — we’ll take it from here.
+    </p>
+
+    <br/>
+
+    <p>
+      Cheers,<br/>
+      <strong>Team BlueKod 💙</strong>
+    </p>
+
+    <hr style="margin-top:30px; border:none; border-top:1px solid #eee;" />
+
+    <p style="font-size:12px; color:#777;">
+      This is an automated message confirming we received your request.
+    </p>
+  </div>
+`,
+  });
+}
 
 // ─────────────────────────────────────────────
 //  POST /api/contact
-//  Save a new contact form submission
 // ─────────────────────────────────────────────
 async function createContact(req, res) {
   try {
     const { firstName, lastName, email, service, message } = req.body;
 
-    // Build the document
     const contactData = {
       firstName,
-      lastName:  lastName  || '',
-      email:     email.toLowerCase().trim(),
-      service:   service   || '',
+      lastName: lastName || '',
+      email: email.toLowerCase().trim(),
+      service: service || '',
       message,
       ipAddress: req.ip || req.headers['x-forwarded-for'] || '',
       userAgent: req.headers['user-agent'] || '',
     };
 
     const contact = new Contact(contactData);
-    const saved   = await contact.save();
+    const saved = await contact.save();
 
-    console.log(`📩  New contact saved | id: ${saved._id} | from: ${saved.email}`);
+    console.log(`📩 New contact saved | id: ${saved._id} | from: ${saved.email}`);
+
+    // 🔥 SEND EMAILS (non-blocking for faster response)
+    sendLeadNotification(contactData);
+    sendAutoReply(contactData);
 
     return res.status(201).json({
       success: true,
       message: 'Your message has been received! We will get back to you within 24 hours.',
       data: {
-        id:        saved._id,
-        fullName:  saved.fullName,
-        email:     saved.email,
-        service:   saved.service,
+        id: saved._id,
+        fullName: saved.fullName,
+        email: saved.email,
+        service: saved.service,
         createdAt: saved.createdAt,
       },
     });
+
   } catch (error) {
-    // Mongoose validation error
     if (error.name === 'ValidationError') {
       const errors = Object.values(error.errors).map(e => e.message);
       return res.status(422).json({
@@ -57,25 +166,23 @@ async function createContact(req, res) {
 
 // ─────────────────────────────────────────────
 //  GET /api/contact
-//  List all submissions (admin use)
-//  Supports: ?page=1&limit=20&status=new&email=&sort=desc
 // ─────────────────────────────────────────────
 async function getAllContacts(req, res) {
   try {
     const {
-      page   = 1,
-      limit  = 20,
+      page = 1,
+      limit = 20,
       status,
       email,
-      sort   = 'desc',
+      sort = 'desc',
     } = req.query;
 
     const filter = {};
     if (status) filter.status = status;
-    if (email)  filter.email  = { $regex: email, $options: 'i' };
+    if (email) filter.email = { $regex: email, $options: 'i' };
 
     const sortOrder = sort === 'asc' ? 1 : -1;
-    const skip      = (Number(page) - 1) * Number(limit);
+    const skip = (Number(page) - 1) * Number(limit);
 
     const [contacts, total] = await Promise.all([
       Contact.find(filter)
@@ -88,11 +195,11 @@ async function getAllContacts(req, res) {
 
     return res.status(200).json({
       success: true,
-      data:    contacts,
+      data: contacts,
       meta: {
         total,
-        page:       Number(page),
-        limit:      Number(limit),
+        page: Number(page),
+        limit: Number(limit),
         totalPages: Math.ceil(total / Number(limit)),
       },
     });
@@ -104,7 +211,6 @@ async function getAllContacts(req, res) {
 
 // ─────────────────────────────────────────────
 //  GET /api/contact/:id
-//  Get a single submission by ID
 // ─────────────────────────────────────────────
 async function getContactById(req, res) {
   try {
@@ -126,7 +232,6 @@ async function getContactById(req, res) {
 
 // ─────────────────────────────────────────────
 //  PATCH /api/contact/:id/status
-//  Update the status of a submission
 // ─────────────────────────────────────────────
 async function updateContactStatus(req, res) {
   try {
@@ -153,7 +258,7 @@ async function updateContactStatus(req, res) {
     return res.status(200).json({
       success: true,
       message: `Status updated to "${status}"`,
-      data:    contact,
+      data: contact,
     });
   } catch (error) {
     console.error('updateContactStatus error:', error);
@@ -163,7 +268,6 @@ async function updateContactStatus(req, res) {
 
 // ─────────────────────────────────────────────
 //  DELETE /api/contact/:id
-//  Delete a single submission
 // ─────────────────────────────────────────────
 async function deleteContact(req, res) {
   try {
@@ -176,7 +280,7 @@ async function deleteContact(req, res) {
     return res.status(200).json({
       success: true,
       message: 'Contact deleted successfully',
-      data:    { id: req.params.id },
+      data: { id: req.params.id },
     });
   } catch (error) {
     console.error('deleteContact error:', error);
@@ -186,20 +290,18 @@ async function deleteContact(req, res) {
 
 // ─────────────────────────────────────────────
 //  GET /api/contact/stats
-//  Summary counts grouped by status
 // ─────────────────────────────────────────────
 async function getStats(req, res) {
   try {
     const [statusCounts, total, recent] = await Promise.all([
       Contact.aggregate([
         { $group: { _id: '$status', count: { $sum: 1 } } },
-        { $sort:  { _id: 1 } },
+        { $sort: { _id: 1 } },
       ]),
       Contact.countDocuments(),
       Contact.find().sort({ createdAt: -1 }).limit(5).lean(),
     ]);
 
-    // Convert array to object: { new: 3, read: 10, ... }
     const byStatus = statusCounts.reduce((acc, item) => {
       acc[item._id] = item.count;
       return acc;
