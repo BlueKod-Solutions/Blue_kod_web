@@ -19,25 +19,38 @@ async function sendLeadNotification(data) {
     ],
     subject: "🚀 New Lead Generated",
     html: `
-      <div style="font-family: Arial, sans-serif; color:#333;">
-        <h2 style="color:#16a34a;">🚀 New Lead Alert!</h2>
+  <div style="font-family: Arial, sans-serif; color:#333;">
+    
+    <h2 style="color:#16a34a;">🚀 New Lead Alert!</h2>
+    
+    <p>A new potential client just reached out via the website.</p>
 
-        <p>A new potential client just reached out via the website.</p>
+    <div style="background:#f9fafb; padding:15px; border-radius:10px; margin-top:10px;">
+      
+      <p><strong>👤 Name:</strong> ${data.firstName} ${data.lastName}</p>
+      <p><strong>📧 Email:</strong> ${data.email}</p>
+      <p><strong>🛠 Service:</strong> ${data.service || 'Not specified'}</p>
+      
+      <p><strong>💬 Message:</strong></p>
+      <p style="background:#fff; padding:10px; border-left:4px solid #4f46e5;">
+        ${data.message}
+      </p>
 
-        <div style="background:#f9fafb; padding:15px; border-radius:10px;">
-          <p><strong>👤 Name:</strong> ${data.firstName} ${data.lastName}</p>
-          <p><strong>📧 Email:</strong> ${data.email}</p>
-          <p><strong>🛠 Service:</strong> ${data.service || 'Not specified'}</p>
+    </div>
 
-          <p><strong>💬 Message:</strong></p>
-          <p style="background:#fff; padding:10px; border-left:4px solid #4f46e5;">
-            ${data.message}
-          </p>
-        </div>
+    <br/>
 
-        <p style="margin-top:15px;">👉 Follow up quickly — hot lead! 🔥</p>
-      </div>
-    `,
+    <p style="color:#555;">
+      👉 Make sure to follow up quickly — hot lead! 🔥
+    </p>
+
+    <hr style="margin-top:20px; border:none; border-top:1px solid #eee;" />
+
+    <p style="font-size:12px; color:#777;">
+      BlueKod Lead System
+    </p>
+  </div>
+`,
   });
 }
 
@@ -47,27 +60,40 @@ async function sendAutoReply(data) {
     to: data.email,
     subject: "Thanks for contacting BlueKod!",
     html: `
-      <div style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
-        <h2 style="color:#4f46e5;">Hey ${data.firstName} 👋</h2>
+  <div style="font-family: Arial, sans-serif; line-height:1.6; color:#333;">
+    
+    <h2 style="color:#4f46e5;">Hey ${data.firstName} 👋</h2>
+    
+    <p>
+      Thanks for reaching out to <strong>BlueKod</strong> — we’re excited to hear from you! 🚀
+    </p>
+    
+    <p>
+      Your message just landed safely in our inbox, and our team is already taking a look.
+    </p>
+    
+    <p style="background:#f3f4f6; padding:12px; border-radius:8px;">
+      ⏳ We typically respond within <strong>24 hours</strong> (often much sooner 😉)
+    </p>
 
-        <p>Thanks for reaching out to <strong>BlueKod</strong> 🚀</p>
+    <p>
+      In the meantime, feel free to sit back — we’ll take it from here.
+    </p>
 
-        <p>Your message has been received and our team is reviewing it.</p>
+    <br/>
 
-        <p style="background:#f3f4f6; padding:12px; border-radius:8px;">
-          ⏳ We usually respond within <strong>24 hours</strong>
-        </p>
+    <p>
+      Cheers,<br/>
+      <strong>Team BlueKod 💙</strong>
+    </p>
 
-        <p>We’ll get back to you shortly!</p>
+    <hr style="margin-top:30px; border:none; border-top:1px solid #eee;" />
 
-        <br/>
-
-        <p>
-          Cheers,<br/>
-          <strong>Team BlueKod 💙</strong>
-        </p>
-      </div>
-    `,
+    <p style="font-size:12px; color:#777;">
+      This is an automated message confirming we received your request.
+    </p>
+  </div>
+`,
   });
 }
 
