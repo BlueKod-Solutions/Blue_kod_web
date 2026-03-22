@@ -7,11 +7,14 @@ const nodemailer = require("nodemailer");
 // ─────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false,
   auth: {
     user: "admin@bluekod.com",      // ← your email
-    pass: "Admin@bluekod2026",    // ← your password
+    pass: "Admin@bluekod2026",
+  },
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
@@ -131,8 +134,12 @@ async function createContact(req, res) {
     console.log(`📩 New contact saved | id: ${saved._id} | from: ${saved.email}`);
 
     // 🔥 SEND EMAILS (non-blocking for faster response)
-    sendLeadNotification(contactData);
-    sendAutoReply(contactData);
+    try {
+      await sendLeadNotification(contactData);
+      await sendAutoReply(contactData);
+    } catch (err) {
+      console.error("Email error:", err);
+    }
 
     return res.status(201).json({
       success: true,
