@@ -6,11 +6,12 @@ const nodemailer = require("nodemailer");
 //  SMTP CONFIG (Hostinger)
 // ─────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
-  host: "smtp.hostinger.com",
+  host: "172.65.255.143",   // ✅ changed
   port: 587,
   secure: false,
+  name: "bluekod.com",      // ✅ added
   auth: {
-    user: "admin@bluekod.com",      // ← your email
+    user: "admin@bluekod.com",
     pass: "Admin@bluekod2026",
   },
   tls: {
@@ -134,12 +135,15 @@ async function createContact(req, res) {
     console.log(`📩 New contact saved | id: ${saved._id} | from: ${saved.email}`);
 
     // 🔥 SEND EMAILS (non-blocking for faster response)
-    try {
-      await sendLeadNotification(contactData);
-      await sendAutoReply(contactData);
-    } catch (err) {
-      console.error("Email error:", err);
-    }
+    setImmediate(async () => {
+      try {
+        await sendLeadNotification(contactData);
+        await sendAutoReply(contactData);
+        console.log("✅ Emails sent");
+      } catch (err) {
+        console.error("❌ Email error:", err);
+      }
+    });
 
     return res.status(201).json({
       success: true,
